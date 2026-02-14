@@ -12,10 +12,10 @@
             name="httpAccessLogAppender"
             class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
-        <file>logs/access.log</file>
+        <file>${AZURE_MOUNT_PATH:-/mnt/azure}/logs/access.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>logs/access-%d{yyyy-MM-dd}.log
+            <fileNamePattern>${AZURE_MOUNT_PATH:-/mnt/azure}/logs/access-%d{yyyy-MM-dd}.log
             </fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
@@ -27,10 +27,10 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/cloudgene.log</file>
+        <file>${AZURE_MOUNT_PATH:-/mnt/azure}/logs/cloudgene.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>logs/cloudgene-%d{yyyy-MM-dd}.log
+            <fileNamePattern>${AZURE_MOUNT_PATH:-/mnt/azure}/logs/cloudgene-%d{yyyy-MM-dd}.log
             </fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
@@ -45,11 +45,11 @@
     </appender>
 
     <root level="debug">
-        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
     </root>
 
     <logger name="my-access-logger" additivity="false" level="info">
-        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="httpAccessLogAppender" />
     </logger>
 
 </configuration>
