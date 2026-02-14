@@ -1,0 +1,1 @@
+This file is a static placeholder; actual test output files are generated at test time and must not be committed to the repository.

@@ -1,0 +1,64 @@
+# Maven build artifacts
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation and CI/CD (not needed in container)
+docs/
+.github/
+.devcontainer/
+mkdocs.yml
+DEVELOPING.md
+README.md
+RELEASE.md
+LICENSE
+CNAME
+
+# Test data and workspaces
+test-data/
+test-database/
+workspace/
+tmp/
+
+# Docker files
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# Azure and deployment
+.azure/
