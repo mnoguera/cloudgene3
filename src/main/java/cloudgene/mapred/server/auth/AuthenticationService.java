@@ -20,6 +20,7 @@ import io.micronaut.security.authentication.AuthenticationException;
 import io.micronaut.security.authentication.AuthorizationException;
 import io.micronaut.security.token.jwt.generator.JwtTokenGenerator;
 import io.micronaut.security.token.jwt.validator.JwtTokenValidator;
+import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import reactor.core.publisher.Mono;
@@ -38,6 +39,7 @@ public class AuthenticationService {
 	protected JwtTokenGenerator generator;
 
 	@Inject
+	@Nullable
 	protected JwtTokenValidator validator;
 
 	public static String ATTRIBUTE_TOKEN_TYPE = "token_type";
@@ -119,6 +121,10 @@ public class AuthenticationService {
 	}
 
 	public Mono<ValidatedApiTokenResponse> validateApiToken(String token) {
+
+		if (validator == null) {
+			return Mono.just(ValidatedApiTokenResponse.error("JWT Token Validator not available"));
+		}
 
 		Publisher<Authentication> authentication = validator.validateToken(token, null);
 

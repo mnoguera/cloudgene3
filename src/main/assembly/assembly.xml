@@ -41,6 +41,17 @@
 		<fileSet>
 			<outputDirectory>/webapp</outputDirectory>
 			<directory>src/main/html/webapp/public</directory>
+			<excludes>
+				<exclude>*.vm</exclude>
+			</excludes>
+		</fileSet>
+
+		<fileSet>
+			<outputDirectory>/webapp/views</outputDirectory>
+			<directory>src/main/html/webapp/public</directory>
+			<includes>
+				<include>*.vm</include>
+			</includes>
 		</fileSet>
 
 	</fileSets>

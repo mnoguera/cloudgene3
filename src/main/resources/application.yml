@@ -35,6 +35,8 @@ micronaut:
             secret:
               generator:
                 secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"'
+              validation:
+                secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"'
       redirect:
         enabled: false
 
@@ -58,7 +60,7 @@ micronaut:
           - file:pages
           - classpath:/pages
   views:
-    folder: webapp
+    enabled: true
   serde:
     serialization:
       inclusion: ALWAYS
