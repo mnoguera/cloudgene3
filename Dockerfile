@@ -32,7 +32,7 @@ FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
 
 # Create necessary directories
-RUN mkdir -p /app/webapp /app/logs /app/tmp-files /app/data
+RUN mkdir -p /app/webapp /app/logs /app/tmp-files /app/data /mnt/azure/logs
 
 # Copy the built artifact from builder stage
 # The assembly plugin creates a zip file, we need to extract it
@@ -44,10 +44,13 @@ RUN unzip /tmp/cloudgene.zip -d /tmp && \
     rm -rf /tmp/cloudgene.zip /tmp/cloudgene-* && \
     chmod +x /app/cloudgene
 
+# Set build-time argument for JWT secret (no default; must be provided)
+ARG JWT_GENERATOR_SIGNATURE_SECRET
+
 # Set environment variables
 ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/app:${PATH}" \
-    JWT_GENERATOR_SIGNATURE_SECRET=pleaseChangeThisSecretForANewOne
+    JWT_GENERATOR_SIGNATURE_SECRET=${JWT_GENERATOR_SIGNATURE_SECRET}
 
 # Expose the default port
 EXPOSE 8080
