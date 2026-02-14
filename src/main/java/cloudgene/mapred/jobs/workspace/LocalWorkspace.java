@@ -5,9 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -226,7 +226,7 @@ public class LocalWorkspace implements IWorkspace {
 	protected Download createDownload(String prefix, File file) {
 		String filename = prefix.equals("") ? file.getName() : prefix + "/" + file.getName();
 		String size = FileUtils.byteCountToDisplaySize(file.length());
-		String hash = HashUtil.getSha256(filename + size + (Math.random() * 100000));
+		String hash = HashUtil.getSha256(filename + size + (ThreadLocalRandom.current().nextDouble() * 100000));
 		Download download = new Download();
 		download.setName(filename);
 		download.setPath(relative(file.getAbsolutePath()));
@@ -236,8 +236,8 @@ public class LocalWorkspace implements IWorkspace {
 	}
 
 	protected String relative(String absolute) {
-		Path pathAbsolute = Paths.get(absolute);
-		Path pathRoot = Paths.get(location);
+		Path pathAbsolute = Path.of(absolute);
+		Path pathRoot = Path.of(location);
 		Path pathRelative = pathRoot.relativize(pathAbsolute);
 		return pathRelative.toString();
 	}

@@ -1,8 +1,8 @@
 package cloudgene.mapred.util;
 
 import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.nio.file.PathMatcher;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class GlobUtil {
@@ -25,7 +25,7 @@ public class GlobUtil {
 
     private static boolean matchPattern(String filename, String pattern) {
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern);
-        return matcher.matches(Paths.get(filename));
+        return matcher.matches(Path.of(filename));
     }
 
 }

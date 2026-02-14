@@ -11,8 +11,8 @@ public class MapValueParser {
             String key = entry.getKey();
             Object value = entry.getValue();
             
-            if (value instanceof String) {
-                parsedMap.put(key, guessType((String) value));
+            if (value instanceof String string) {
+                parsedMap.put(key, guessType(string));
             } else if (value instanceof Map) {
                 parsedMap.put(key, parseMap((Map<String, Object>) value));
             } else {

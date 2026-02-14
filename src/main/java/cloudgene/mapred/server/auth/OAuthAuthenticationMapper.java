@@ -71,7 +71,7 @@ public class OAuthAuthenticationMapper extends DefaultOpenIdAuthenticationMapper
 			if (user.getLoginAttempts() >= MAX_LOGIN_ATTEMMPTS) {
 				if (user.getLockedUntil() == null || user.getLockedUntil().after(new Date())) {
 
-					throw AuthenticationResponse.exception(String.format(MESSAGE_ACCOUNT_LOCKED, LOCKING_TIME_MIN));
+					throw AuthenticationResponse.exception(MESSAGE_ACCOUNT_LOCKED.formatted(LOCKING_TIME_MIN));
 
 				} else {
 					// penalty time is over. set to zero

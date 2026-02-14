@@ -53,8 +53,8 @@ public class JobService {
 
 		} else {
 
-			if (job instanceof CloudgeneJob) {
-				((CloudgeneJob) job).updateProgress();
+			if (job instanceof CloudgeneJob cloudgeneJob) {
+				cloudgeneJob.updateProgress();
 			}
 		}
 

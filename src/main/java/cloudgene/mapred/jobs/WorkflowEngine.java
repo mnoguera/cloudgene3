@@ -104,7 +104,12 @@ public class WorkflowEngine implements Runnable {
 	}
 
 	public void stop() {
-		threadLongTimeQueue.stop();
+		/*
+		 * `Thread.stop()` always throws a `new UnsupportedOperationException()` in Java 21+.
+		 * For detailed migration instructions see the migration guide available at
+		 * https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/doc-files/threadPrimitiveDeprecation.html
+		 */
+		throw new UnsupportedOperationException();
 	}
 
 	public void block() {
@@ -140,7 +145,7 @@ public class WorkflowEngine implements Runnable {
 					Integer value = counters.get(name);
 					Long oldvalue = result.get(name);
 					if (oldvalue == null) {
-						oldvalue = new Long(0);
+						oldvalue = Long.valueOf(0);
 					}
 					result.put(name, oldvalue + value);
 				}
@@ -156,9 +161,9 @@ public class WorkflowEngine implements Runnable {
 
 		for (AbstractJob job : jobs) {
 
-			if (job instanceof CloudgeneJob) {
+			if (job instanceof CloudgeneJob cloudgeneJob) {
 
-				((CloudgeneJob) job).updateProgress();
+				cloudgeneJob.updateProgress();
 
 			}
 
@@ -173,9 +178,9 @@ public class WorkflowEngine implements Runnable {
 
 		for (AbstractJob job : jobs) {
 
-			if (job instanceof CloudgeneJob) {
+			if (job instanceof CloudgeneJob cloudgeneJob) {
 
-				((CloudgeneJob) job).updateProgress();
+				cloudgeneJob.updateProgress();
 
 			}
 

@@ -120,8 +120,8 @@ public class PausableThreadPoolExecutor extends ThreadPoolExecutor {
             }
             if (object != null && o.object != null) {
                 if (object.getClass().equals(o.object.getClass())) {
-                    if (object instanceof Comparable) {
-                        return ((Comparable) object).compareTo(o.object);
+                    if (object instanceof Comparable comparable) {
+                        return comparable.compareTo(o.object);
                     }
                 }
             }

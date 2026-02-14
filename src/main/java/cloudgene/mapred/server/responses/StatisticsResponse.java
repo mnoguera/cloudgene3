@@ -2,6 +2,7 @@ package cloudgene.mapred.server.responses;
 
 import com.fasterxml.jackson.annotation.JsonClassDescription;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Vector;
 @JsonClassDescription
 public class StatisticsResponse extends HashMap<String, String> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public static String[] counters = new String[] { "runningJobs", "waitingJobs", "completeJobs", "users" };

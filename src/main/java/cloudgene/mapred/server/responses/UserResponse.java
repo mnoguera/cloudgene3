@@ -58,11 +58,11 @@ public class UserResponse {
 			if (user.getApiTokenExpiresOn().getTime() > System.currentTimeMillis()) {
 				response.setApiTokenValid(true);
 				response.setApiTokenMessage(
-						String.format(MESSAGE_VALID_TOKEN, user.getUsername(), user.getApiTokenExpiresOn()));
+						MESSAGE_VALID_TOKEN.formatted(user.getUsername(), user.getApiTokenExpiresOn()));
 			} else {
 				response.setApiTokenValid(false);
 				response.setApiTokenMessage(
-						String.format(MESSAGE_EXPIRED_TOKEN, user.getUsername(), user.getApiTokenExpiresOn()));
+						MESSAGE_EXPIRED_TOKEN.formatted(user.getUsername(), user.getApiTokenExpiresOn()));
 			}
 		}
 

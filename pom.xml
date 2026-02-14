@@ -44,9 +44,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<packaging>jar</packaging>
-		<jdk.version>17</jdk.version>
-		<release.version>17</release.version>
-		<java.version>17</java.version>
+		<jdk.version>21</jdk.version>
+		<release.version>21</release.version>
+		<java.version>21</java.version>
 		<micronaut.version>4.7.6</micronaut.version>
 		<micronaut.runtime>netty</micronaut.runtime>
 		<exec.mainClass>cloudgene.mapred.CommandLineInterface</exec.mainClass>
@@ -158,15 +158,11 @@
 			<version>1.7</version>
 		</dependency>
 
-
-
 		<dependency>
 			<groupId>net.lingala.zip4j</groupId>
 			<artifactId>zip4j</artifactId>
 			<version>2.11.5</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-s3</artifactId>
@@ -180,7 +176,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-crypto</artifactId>
-			<version>5.8.3</version>
+			<version>6.0.8</version>
 		</dependency>
 
 		<dependency>
@@ -206,11 +202,7 @@
 			</exclusions>
 		</dependency>
 
-
-
 		<!-- Micronaut -->
-
-
 	    <dependency>
 		      <groupId>io.micronaut.validation</groupId>
 		      <artifactId>micronaut-validation</artifactId>
@@ -353,6 +345,8 @@
 		</resources>
 
 		<plugins>
+
+			<plugin>
 
 			<plugin>
 		        <groupId>io.micronaut.maven</groupId>

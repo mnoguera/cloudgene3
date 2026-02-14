@@ -6,6 +6,7 @@ import static io.micronaut.http.HttpHeaders.USER_AGENT;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.Map;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.netty.DefaultHttpClient;
-import reactor.core.publisher.Mono;;
+import reactor.core.publisher.Mono;
 
 public class GitHubUtil {
 
@@ -108,7 +109,7 @@ public class GitHubUtil {
 		HttpClient httpClient = new DefaultHttpClient();
 
 		try {
-			URL url = new URL(urlString);
+			URL url = URI.create(urlString).toURL();
 			URLConnection request = url.openConnection();
 			request.setRequestProperty("content-type", "application/json");
 			request.connect();

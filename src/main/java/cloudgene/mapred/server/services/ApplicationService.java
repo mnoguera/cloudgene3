@@ -38,7 +38,7 @@ public class ApplicationService {
 		Application app = repository.getById(appId);
 
 		if (app == null) {
-			throw new JsonHttpStatusException(HttpStatus.NOT_FOUND, String.format(APPLICATION_NOT_FOUND, appId));
+			throw new JsonHttpStatusException(HttpStatus.NOT_FOUND, APPLICATION_NOT_FOUND.formatted(appId));
 		}
 
 		return app;
@@ -57,7 +57,7 @@ public class ApplicationService {
 		Application app = repository.getByIdAndUser(appId, user);
 
 		if (app == null) {
-			throw new JsonHttpStatusException(HttpStatus.NOT_FOUND, String.format(APPLICATION_NOT_FOUND, appId));
+			throw new JsonHttpStatusException(HttpStatus.NOT_FOUND, APPLICATION_NOT_FOUND.formatted(appId));
 		}
 
 		return app;
@@ -70,7 +70,7 @@ public class ApplicationService {
 
 		if (wdlApp.getWorkflow() == null) {
 			throw new JsonHttpStatusException(HttpStatus.NOT_FOUND,
-					String.format(APPLICATION_IS_DATA_PACKAGE, app.getId()));
+					APPLICATION_IS_DATA_PACKAGE.formatted(app.getId()));
 		}
 
 	}
@@ -88,10 +88,10 @@ public class ApplicationService {
 
 			} catch (Exception e) {
 				throw new JsonHttpStatusException(HttpStatus.BAD_REQUEST,
-						String.format(APPLICATION_NOT_REMOVED, e.getMessage()));
+						APPLICATION_NOT_REMOVED.formatted(e.getMessage()));
 			}
 		} else {
-			throw new JsonHttpStatusException(HttpStatus.NOT_FOUND, String.format(APPLICATION_NOT_FOUND, appId));
+			throw new JsonHttpStatusException(HttpStatus.NOT_FOUND, APPLICATION_NOT_FOUND.formatted(appId));
 		}
 
 	}
@@ -173,19 +173,19 @@ public class ApplicationService {
 			application.getSettings().save();
 
 			if (!apps.isEmpty()) {
-				return apps.get(0);
+				return apps.getFirst();
 			} else {
 				throw new JsonHttpStatusException(HttpStatus.BAD_REQUEST, APPLICATION_NOT_INSTALLED_NO_WORKFLOW);
 			}
 		} catch (Exception e) {
 			log.error(APPLICATION_NOT_INSTALLED, e);
 			throw new JsonHttpStatusException(HttpStatus.BAD_REQUEST,
-					String.format(APPLICATION_NOT_INSTALLED, e.getMessage()));
+					APPLICATION_NOT_INSTALLED.formatted(e.getMessage()));
 
 		} catch (Error e) {
 			log.error(APPLICATION_NOT_INSTALLED, e);
 			throw new JsonHttpStatusException(HttpStatus.BAD_REQUEST,
-					String.format(APPLICATION_NOT_INSTALLED, e.getMessage()));
+					APPLICATION_NOT_INSTALLED.formatted(e.getMessage()));
 		}
 
 	}

@@ -81,9 +81,9 @@ public class FormUtil {
 
 		String partName = completedPart.getName();
 
-		if (completedPart instanceof CompletedFileUpload) {
+		if (completedPart instanceof CompletedFileUpload upload) {
 
-			String originalFileName = ((CompletedFileUpload) completedPart).getFilename();
+			String originalFileName = upload.getFilename();
 			File file = new File(folder, originalFileName);
 
 			try {

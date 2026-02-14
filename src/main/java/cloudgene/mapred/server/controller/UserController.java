@@ -65,7 +65,7 @@ public class UserController {
 		User user = userService.getByUsername(username);
 		user = userService.deleteUser(user);
 
-		log.info(String.format("User: Deleted user %s (ID %s) (by ADMIN user ID %s - email %s)", user.getUsername(),
+		log.info("User: Deleted user %s (ID %s) (by ADMIN user ID %s - email %s)".formatted(user.getUsername(),
 				user.getId(), admin.getId(), admin.getMail()));
 
 		return UserResponse.build(user);
@@ -81,7 +81,7 @@ public class UserController {
 		User user = userService.getByUsername(username);
 		user = userService.changeRoles(user, role);
 
-		log.info(String.format("User: Changed group membership for %s (ID %s) to %s (by ADMIN user ID %s - email %s)",
+		log.info("User: Changed group membership for %s (ID %s) to %s (by ADMIN user ID %s - email %s)".formatted(
 				user.getUsername(), user.getId(), String.join(",", user.getRoles()), admin.getId(), admin.getMail()));
 
 		return UserResponse.build(user);

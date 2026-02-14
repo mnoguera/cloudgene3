@@ -62,7 +62,7 @@ public class DownloadController {
 		if (download == null) {
 			download = job.findDownloadByHash(hash);
 		}
-		String message = String.format("Job: Downloading file '%s' for job %s", filename, job.getId());
+		String message = "Job: Downloading file '%s' for job %s".formatted(filename, job.getId());
 		log.info(message);
 		return downloadService.download(download);
 
@@ -76,7 +76,7 @@ public class DownloadController {
 		DownloadDao dao = new DownloadDao(application.getDatabase());
 		Download download = dao.findByHash(hash);
 
-		String message = String.format("Job: Anonymously downloading file '%s' (hash %s)", filename, hash);
+		String message = "Job: Anonymously downloading file '%s' (hash %s)".formatted(filename, hash);
 		log.info(message);
 		try {
 			return downloadService.download(download);
@@ -101,7 +101,7 @@ public class DownloadController {
 		DownloadDao dao = new DownloadDao(application.getDatabase());
 		Download download = dao.findByParameterAndName(param, filename);
 
-		String message = String.format("Job: Anonymously downloading file '%s' (hash %s)", filename, hash);
+		String message = "Job: Anonymously downloading file '%s' (hash %s)".formatted(filename, hash);
 		log.info(message);
 		return downloadService.download(download);
 

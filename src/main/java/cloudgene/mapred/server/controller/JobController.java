@@ -72,9 +72,9 @@ public class JobController {
 
 		AbstractJob job = jobService.getByIdAndUser(id, user);
 
-		String message = String.format("Job: Get details for job ID %s", job.getId());
+		String message = "Job: Get details for job ID %s".formatted(job.getId());
 		if (user.isAdmin()) {
-			message += String.format(" (by ADMIN user ID %s - email %s)", user.getId(), user.getMail());
+			message += " (by ADMIN user ID %s - email %s)".formatted(user.getId(), user.getMail());
 		}
 		log.info(message);
 
@@ -112,7 +112,7 @@ public class JobController {
 
 					log.debug("Job " + job.getId() + " submitted in " + (System.currentTimeMillis() - start) + " ms.");
 
-					String message = String.format("Job: Created job ID %s for user %s (ID %s - email %s)", user.getId(),
+					String message = "Job: Created job ID %s for user %s (ID %s - email %s)".formatted(user.getId(),
 							user.getUsername(), user.getId(), user.getMail());
 					if (user.isAccessedByApi()) {
 						message += " (via API token)";
@@ -157,9 +157,9 @@ public class JobController {
 		AbstractJob job = jobService.getByIdAndUser(id, user);
 		jobService.delete(job);
 
-		String message = String.format("Job: Deleted job ID %s", job.getId());
+		String message = "Job: Deleted job ID %s".formatted(job.getId());
 		if (user.isAdmin()) {
-			message += String.format(" (by ADMIN user ID %s - email %s)", user.getId(), user.getMail());
+			message += " (by ADMIN user ID %s - email %s)".formatted(user.getId(), user.getMail());
 		}
 		log.info(message);
 
@@ -192,9 +192,9 @@ public class JobController {
 		AbstractJob job = jobService.getByIdAndUser(id, user);
 		jobService.cancel(job);
 
-		String message = String.format("Job: Canceled job ID %s", job.getId());
+		String message = "Job: Canceled job ID %s".formatted(job.getId());
 		if (user.isAdmin()) {
-			message += String.format(" (by ADMIN user ID %s - email %s)", user.getId(), user.getMail());
+			message += " (by ADMIN user ID %s - email %s)".formatted(user.getId(), user.getMail());
 		}
 		log.info(message);
 
@@ -213,9 +213,9 @@ public class JobController {
 		AbstractJob job = jobService.getByIdAndUser(id, user);
 		jobService.restart(job);
 
-		String message = String.format("Job: Restarted job ID %s", job.getId());
+		String message = "Job: Restarted job ID %s".formatted(job.getId());
 		if (user.isAdmin()) {
-			message += String.format(" (by ADMIN user ID %s - email %s)", user.getId(), user.getMail());
+			message += " (by ADMIN user ID %s - email %s)".formatted(user.getId(), user.getMail());
 		}
 		log.info(message);
 

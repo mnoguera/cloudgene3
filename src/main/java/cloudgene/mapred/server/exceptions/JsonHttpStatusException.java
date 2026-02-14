@@ -1,11 +1,14 @@
 package cloudgene.mapred.server.exceptions;
 
+import java.io.Serial;
+
 import com.fasterxml.jackson.annotation.JsonClassDescription;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.exceptions.HttpStatusException;
 
 public class JsonHttpStatusException extends HttpStatusException {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	private MessageWrapper object;
