@@ -31,7 +31,7 @@ FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 
 # Create necessary directories
-RUN mkdir -p /app/webapp /app/logs /app/tmp-files /app/data
+RUN mkdir -p /app/webapp /app/logs /app/tmp-files /app/data /mnt/azure/logs
 
 # Copy the built artifact from builder stage
 # The assembly plugin creates a zip file, we need to extract it
