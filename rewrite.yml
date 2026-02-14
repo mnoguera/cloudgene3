@@ -1,0 +1,8 @@
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: cloudgene.upgrade
+displayName: Upgrade recipes for Cloudgene
+description: Applies recipes to upgrade Spring Security and Java version
+recipeList:
+  - org.openrewrite.java.spring.security6.UpgradeSpringSecurity_6_0
+  - org.openrewrite.java.migrate.UpgradeToJava21

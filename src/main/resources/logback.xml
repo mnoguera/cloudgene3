@@ -1,6 +1,13 @@
 <configuration>
 
 
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+	    <encoder>
+	        <charset>UTF-8</charset>
+	        <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+	    </encoder>
+	</appender>
+
 	<appender
 	    name="httpAccessLogAppender"
 	    class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -38,11 +45,11 @@
 	</appender>
 
     <root level="info">
-        <appender-ref ref="FILE" />
+        <appender-ref ref="CONSOLE" />
     </root>
     
 	<logger name="my-access-logger" additivity="false" level="info">
-	    <appender-ref ref="httpAccessLogAppender" />
+	    <appender-ref ref="CONSOLE" />
 	</logger>    
     
 </configuration>
