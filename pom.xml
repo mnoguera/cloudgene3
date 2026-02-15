@@ -146,12 +146,7 @@
 			<version>2.18.0</version>
 		</dependency>
 
-		<!-- TODO: yamlbeans has CVE-2023-24621 & CVE-2023-24620 - needs migration to SnakeYAML or Jackson YAML -->
-		<dependency>
-			<groupId>com.esotericsoftware.yamlbeans</groupId>
-			<artifactId>yamlbeans</artifactId>
-			<version>1.15</version>
-		</dependency>
+		<!-- Migrated to SnakeYAML due to CVE-2023-24621 & CVE-2023-24620 -->
 	<!-- TODO: Migrate from commons-lang 2.x to commons-lang3 - commons-lang has CVE-2025-48924 -->
 	<dependency>
 		<groupId>commons-lang</groupId>
@@ -292,7 +287,7 @@
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
-			<scope>runtime</scope>
+			<scope>compile</scope>
 		</dependency>
 		
 		<dependency>
@@ -367,31 +362,31 @@
 	<dependency>
 		<groupId>io.netty</groupId>
 		<artifactId>netty-codec-http2</artifactId>
-		<version>4.1.115.Final</version>
+		<version>4.1.120.Final</version>
 	</dependency>
 
 	<dependency>
 		<groupId>io.netty</groupId>
 		<artifactId>netty-codec-http</artifactId>
-		<version>4.1.115.Final</version>
+		<version>4.1.120.Final</version>
 	</dependency>
 
 	<dependency>
 		<groupId>io.netty</groupId>
 		<artifactId>netty-handler</artifactId>
-		<version>4.1.115.Final</version>
+		<version>4.1.120.Final</version>
 	</dependency>
 
 	<dependency>
 		<groupId>io.netty</groupId>
 		<artifactId>netty-common</artifactId>
-		<version>4.1.115.Final</version>
+		<version>4.1.120.Final</version>
 	</dependency>
 
 	<dependency>
 		<groupId>io.netty</groupId>
 		<artifactId>netty-codec</artifactId>
-		<version>4.1.115.Final</version>
+		<version>4.1.120.Final</version>
 	</dependency>
 
 </dependencies>

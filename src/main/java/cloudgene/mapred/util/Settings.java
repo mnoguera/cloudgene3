@@ -11,10 +11,9 @@ import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esotericsoftware.yamlbeans.YamlConfig;
-import com.esotericsoftware.yamlbeans.YamlException;
-import com.esotericsoftware.yamlbeans.YamlReader;
-import com.esotericsoftware.yamlbeans.YamlWriter;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.LoaderOptions;
+import org.yaml.snakeyaml.Yaml;
 
 import cloudgene.mapred.apps.Application;
 import cloudgene.mapred.apps.ApplicationRepository;
@@ -130,11 +129,10 @@ public class Settings {
 
 		log.info("Loading settings from " + filename + "...");
 
-		YamlConfig yamlConfig = new YamlConfig();
-		yamlConfig.setPropertyElementType(Settings.class, "apps", Application.class);
-		yamlConfig.setClassTag("cloudgene.mapred.util.Application", Application.class);
-		YamlReader reader = new YamlReader(new FileReader(filename), yamlConfig);
-		Settings settings = reader.read(Settings.class);
+		LoaderOptions options = new LoaderOptions();
+		options.setAllowDuplicateKeys(false);
+		Yaml yaml = new Yaml(options);
+		Settings settings = yaml.loadAs(new FileReader(filename), Settings.class);
 		log.info("Settings loaded.");
 
 		log.info("Auto retire: " + settings.isAutoRetire());
@@ -185,13 +183,8 @@ public class Settings {
 			log.info("Storing settings to file " + filename + " (" + getApps().size() + " apps installed)");
 			apps = repository.getAll();
 
-			YamlConfig yamlConfig = new YamlConfig();
-			yamlConfig.setPropertyElementType(Settings.class, "apps", Application.class);
-			yamlConfig.setClassTag("cloudgene.mapred.util.Application", Application.class);
-
-			YamlWriter writer = new YamlWriter(new FileWriter(filename), yamlConfig);
-			writer.write(this);
-			writer.close();
+			Yaml yaml = new Yaml();
+			yaml.dump(this, new FileWriter(filename));
 
 		} catch (Exception e) {
 			log.error("Storing settings failed.", e);

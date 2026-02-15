@@ -25,6 +25,14 @@ public class WdlParameterOutput implements WdlParameter {
 
 	private boolean serialize = true;
 
+	private boolean temp = false;
+
+	private boolean zip = false;
+
+	private boolean removeHeader = false;
+
+	private boolean mergeOutput = false;
+
 	private List<String> includes = new Vector<String>();
 
 	private List<String> excludes = new Vector<String>();
@@ -88,6 +96,38 @@ public class WdlParameterOutput implements WdlParameter {
 
 	public void setSerialize(boolean serialize) {
 		this.serialize = serialize;
+	}
+
+	public boolean isTemp() {
+		return temp;
+	}
+
+	public void setTemp(boolean temp) {
+		this.temp = temp;
+	}
+
+	public boolean isZip() {
+		return zip;
+	}
+
+	public void setZip(boolean zip) {
+		this.zip = zip;
+	}
+
+	public boolean isRemoveHeader() {
+		return removeHeader;
+	}
+
+	public void setRemoveHeader(boolean removeHeader) {
+		this.removeHeader = removeHeader;
+	}
+
+	public boolean isMergeOutput() {
+		return mergeOutput;
+	}
+
+	public void setMergeOutput(boolean mergeOutput) {
+		this.mergeOutput = mergeOutput;
 	}
 
 	public boolean isFileOrFolder() {
