@@ -112,7 +112,7 @@ public class JobController {
 
 					log.debug("Job " + job.getId() + " submitted in " + (System.currentTimeMillis() - start) + " ms.");
 
-					String message = "Job: Created job ID %s for user %s (ID %s - email %s)".formatted(user.getId(),
+					String message = "Job: Created job ID %s for user %s (ID %s - email %s)".formatted(job.getId(),
 							user.getUsername(), user.getId(), user.getMail());
 					if (user.isAccessedByApi()) {
 						message += " (via API token)";

@@ -36,8 +36,8 @@ public class GroovyStep extends CloudgeneStep {
 
 			Method method = scriptClass.getDeclaredMethod("run", new Class[] { WorkflowContext.class });
 			Object result = method.invoke(scriptInstance, new Object[] { context });
-			if (result instanceof Boolean boolean1) {
-				return boolean1;
+			if (result instanceof Boolean success) {
+				return success;
 			} else {
 				return true;
 			}
