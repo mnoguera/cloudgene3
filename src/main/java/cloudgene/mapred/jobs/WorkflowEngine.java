@@ -104,8 +104,26 @@ public class WorkflowEngine implements Runnable {
 	}
 
 	public void stop() {
-		// Use interrupt() instead of deprecated stop() method for Java 21+
-		threadLongTimeQueue.interrupt();
+		// Mark engine as no longer running and stop processing new work
+		running = false;
+
+		// Best-effort cancellation of all queued jobs before shutting down
+		if (longTimeQueue != null) {
+			List<AbstractJob> jobs = longTimeQueue.getAllJobs();
+			for (AbstractJob job : jobs) {
+				if (longTimeQueue.isInQueue(job)) {
+					longTimeQueue.cancel(job);
+				}
+			}
+
+			// Pause the queue to prevent further processing
+			longTimeQueue.pause();
+		}
+
+		// Finally, interrupt the underlying thread as an additional shutdown signal
+		if (threadLongTimeQueue != null && threadLongTimeQueue.isAlive()) {
+			threadLongTimeQueue.interrupt();
+		}
 	}
 
 	public void block() {

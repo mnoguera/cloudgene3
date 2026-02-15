@@ -5,9 +5,9 @@ FROM maven:3.9-eclipse-temurin-21 AS builder
 # Set working directory
 WORKDIR /build
 
-# Install Node.js for building the webapp
-RUN curl -fsSL https://deb.nodesource.com/setup_10.x | bash - && \
-    apt-get install -y nodejs curl unzip && \
+# Install required build tools (Node.js is managed by frontend-maven-plugin)
+RUN apt-get update && \
+    apt-get install -y unzip && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy pom.xml first to leverage Docker layer caching
