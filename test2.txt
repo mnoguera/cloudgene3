@@ -1,1 +1,0 @@
-This file is a placeholder only. The real test file is generated at runtime by tests and must not be committed to version control.
