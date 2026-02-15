@@ -42,6 +42,10 @@ public class Settings {
 
 	private Map<String, String> mail;
 
+	private String mailProvider = "smtp";
+
+	private Map<String, String> awsSes;
+
 	private Map<String, String> database;
 
 	private Map<String, Map<String, String>> plugins;
@@ -221,6 +225,22 @@ public class Settings {
 
 	public void setMail(Map<String, String> mail) {
 		this.mail = mail;
+	}
+
+	public String getMailProvider() {
+		return mailProvider;
+	}
+
+	public void setMailProvider(String mailProvider) {
+		this.mailProvider = mailProvider;
+	}
+
+	public Map<String, String> getAwsSes() {
+		return awsSes;
+	}
+
+	public void setAwsSes(Map<String, String> awsSes) {
+		this.awsSes = awsSes;
 	}
 
 	public void setName(String name) {

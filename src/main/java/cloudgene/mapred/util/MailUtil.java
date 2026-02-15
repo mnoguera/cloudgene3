@@ -21,20 +21,21 @@ public class MailUtil {
 
 		if (settings.getAdminMail() != null && !settings.getAdminMail().isEmpty()) {
 
-			send(settings.getMail().get("smtp"), settings.getMail().get("port"), settings.getMail().get("user"),
-					settings.getMail().get("password"), settings.getMail().get("name"), settings.getAdminMail(),
-					subject, text);
+			send(settings, settings.getAdminMail(), subject, text);
 		}
 
 	}
 
 	public static void send(Settings settings, String tos, String subject, String text) throws Exception {
 
-		send(settings.getMail().get("smtp"), settings.getMail().get("port"), settings.getMail().get("user"),
-				settings.getMail().get("password"), settings.getMail().get("name"), tos, subject, text);
+		EmailProvider provider = getProvider(settings);
+		provider.send(tos, subject, text);
 
 	}
 
+	/**
+	 * Legacy method for backward compatibility - uses SMTP directly
+	 */
 	public static void send(final String smtp, final String port, final String username, final String password,
 			final String name, String tos, String subject, String text) throws Exception {
 
@@ -76,5 +77,58 @@ public class MailUtil {
 		} catch (MessagingException e) {
 			throw new Exception("mail could not be sent: " + e.getMessage());
 		}
+	}
+
+	/**
+	 * Factory method to create the appropriate email provider based on settings
+	 */
+	private static EmailProvider getProvider(Settings settings) {
+		String provider = settings.getMailProvider();
+		
+		if (provider == null) {
+			provider = "smtp"; // default to SMTP for backward compatibility
+		}
+
+		if ("aws-ses".equalsIgnoreCase(provider) || "ses".equalsIgnoreCase(provider)) {
+			// AWS SES provider
+			if (settings.getAwsSes() == null) {
+				log.warn("AWS SES provider selected but no awsSes configuration found. Falling back to SMTP.");
+				return createSmtpProvider(settings);
+			}
+			
+			String region = settings.getAwsSes().get("region");
+			String fromAddress = settings.getAwsSes().get("from");
+			String configurationSet = settings.getAwsSes().get("configuration-set");
+			
+			if (region == null || fromAddress == null) {
+				log.warn("AWS SES provider requires 'region' and 'from' configuration. Falling back to SMTP.");
+				return createSmtpProvider(settings);
+			}
+			
+			log.info("Using AWS SES email provider with region: " + region);
+			return new AwsSesEmailProvider(region, fromAddress, configurationSet);
+		} else {
+			// Default SMTP provider
+			return createSmtpProvider(settings);
+		}
+	}
+
+	/**
+	 * Helper method to create SMTP provider from settings
+	 */
+	private static EmailProvider createSmtpProvider(Settings settings) {
+		if (settings.getMail() == null) {
+			log.warn("No mail configuration found in settings");
+			throw new RuntimeException("No mail configuration found");
+		}
+		
+		log.info("Using SMTP email provider");
+		return new SmtpEmailProvider(
+			settings.getMail().get("smtp"),
+			settings.getMail().get("port"),
+			settings.getMail().get("user"),
+			settings.getMail().get("password"),
+			settings.getMail().get("name")
+		);
 	}
 }
