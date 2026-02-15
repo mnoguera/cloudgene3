@@ -21,6 +21,10 @@ public class ServerResponse {
 	private String mailPassword;
 	private String mailName;
 	private boolean mail;
+	private String mailProvider;
+	private String mailAwsSesRegion;
+	private String mailAwsSesFrom;
+	private String mailAwsSesConfigurationSet;
 	private String adminName;
 	private String adminMail;
 	private String serverUrl;
@@ -44,20 +48,29 @@ public class ServerResponse {
 		Map<String, String> mail = settings.getMail();
 		if (mail != null) {
 			response.setMail(true);
+			response.setMailProvider(mail.getOrDefault("provider", "smtp"));
+			// SMTP fields
 			response.setMailSmtp(mail.get("smtp"));
 			response.setMailPort(mail.get("port"));
 			response.setMailUser(mail.get("user"));
 			response.setMailPassword(mail.get("password"));
-			response.setMailUser(mail.get("user"));
 			response.setMailName(mail.get("name"));
+			// AWS SES fields
+			response.setMailAwsSesRegion(mail.get("aws-ses-region"));
+			response.setMailAwsSesFrom(mail.get("aws-ses-from"));
+			response.setMailAwsSesConfigurationSet(mail.get("aws-ses-configuration-set"));
 
 		} else {
 			response.setMail(false);
+			response.setMailProvider("smtp");
 			response.setMailSmtp("");
 			response.setMailPort("");
 			response.setMailUser("");
 			response.setMailPassword("");
 			response.setMailName("");
+			response.setMailAwsSesRegion("");
+			response.setMailAwsSesFrom("");
+			response.setMailAwsSesConfigurationSet("");
 
 		}
 
@@ -174,6 +187,38 @@ public class ServerResponse {
 
 	public void setMail(boolean mail) {
 		this.mail = mail;
+	}
+
+	public String getMailProvider() {
+		return mailProvider;
+	}
+
+	public void setMailProvider(String mailProvider) {
+		this.mailProvider = mailProvider;
+	}
+
+	public String getMailAwsSesRegion() {
+		return mailAwsSesRegion;
+	}
+
+	public void setMailAwsSesRegion(String mailAwsSesRegion) {
+		this.mailAwsSesRegion = mailAwsSesRegion;
+	}
+
+	public String getMailAwsSesFrom() {
+		return mailAwsSesFrom;
+	}
+
+	public void setMailAwsSesFrom(String mailAwsSesFrom) {
+		this.mailAwsSesFrom = mailAwsSesFrom;
+	}
+
+	public String getMailAwsSesConfigurationSet() {
+		return mailAwsSesConfigurationSet;
+	}
+
+	public void setMailAwsSesConfigurationSet(String mailAwsSesConfigurationSet) {
+		this.mailAwsSesConfigurationSet = mailAwsSesConfigurationSet;
 	}
 
 	public void setWorkspaceLocation(String workspaceLocation) {

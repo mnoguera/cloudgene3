@@ -45,6 +45,7 @@ nav:
   - Manage Permissions: server/permissions.md
   - Manage Jobs: server/jobs.md
   - Configuration: server/configuration.md
+  - Configure Email (AWS SES): server/configure-email-aws-ses.md
   - Configure Nextflow: server/configure-nextflow.md
   - Customization: server/customization.md
   - Administration: server/administration.md

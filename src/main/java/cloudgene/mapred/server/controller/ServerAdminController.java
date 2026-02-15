@@ -106,13 +106,14 @@ public class ServerAdminController {
 
 	@Post("/settings/update")
 	public ServerResponse updateSettings(String name, String adminName, String adminMail, String serverUrl, String baseUrl,
-			String backgroundColor, String foregroundColor, String googleAnalytics, boolean mail, String mailSmtp,
-			String mailUser, String mailPassword, String mailPort, String mailName, String workspaceType,
-			String workspaceLocation) {
+			String backgroundColor, String foregroundColor, String googleAnalytics, boolean mail, String mailProvider,
+			String mailSmtp, String mailUser, String mailPassword, String mailPort, String mailName,
+			String mailAwsSesRegion, String mailAwsSesFrom, String mailAwsSesConfigurationSet,
+			String workspaceType, String workspaceLocation) {
 
-		serverService.updateSettings(name, adminName, adminMail, serverUrl, baseUrl,  backgroundColor, foregroundColor,
-				googleAnalytics, String.valueOf(mail), mailSmtp, mailPort, mailUser, mailPassword, mailName,
-				workspaceType, workspaceLocation);
+		serverService.updateSettings(name, adminName, adminMail, serverUrl, baseUrl, backgroundColor, foregroundColor,
+				googleAnalytics, String.valueOf(mail), mailProvider, mailSmtp, mailPort, mailUser, mailPassword, mailName,
+				mailAwsSesRegion, mailAwsSesFrom, mailAwsSesConfigurationSet, workspaceType, workspaceLocation);
 
 		return ServerResponse.build(application.getSettings());
 

@@ -44,6 +44,8 @@ Cloudgene supports several environment variables that can be used in your `cloud
 | `${CLOUDGENE_WORKSPACE_TYPE}`| The type of external workspace.                 |
 | `${CLOUDGENE_WORKSPACE_HOME}`| The location of the external workspace.         |
 
+**Note:** When AWS SES is configured as the email provider (via `provider: aws-ses` in settings), AWS credentials are read from standard AWS environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`) or IAM roles, not from Cloudgene-specific variables.
+
 
 ## Example
 

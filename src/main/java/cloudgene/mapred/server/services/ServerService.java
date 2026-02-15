@@ -122,7 +122,9 @@ public class ServerService {
 	}
 
 	public void updateSettings(String name, String adminName, String adminMail, String serverUrl, String baseUrl, String background_color, String foreground_color, String google_analytics,
-			String mail, String mail_smtp, String mail_port, String mail_user, String mail_password, String mail_name, String workspaceType, String workspaceLocation) {
+			String mail, String mailProvider, String mail_smtp, String mail_port, String mail_user, String mail_password, String mail_name,
+			String mail_aws_ses_region, String mail_aws_ses_from, String mail_aws_ses_configuration_set,
+			String workspaceType, String workspaceLocation) {
 
 		Settings settings = application.getSettings();
 		settings.setName(name);
@@ -138,11 +140,28 @@ public class ServerService {
 		
 		if (mail != null && mail.equals("true")) {
 			Map<String, String> mailConfig = new HashMap<String, String>();
+			// Provider selection (smtp or aws-ses)
+			if (mailProvider != null && !mailProvider.isEmpty()) {
+				mailConfig.put("provider", mailProvider);
+			} else {
+				mailConfig.put("provider", "smtp"); // default
+			}
+			// SMTP configuration
 			mailConfig.put("smtp", mail_smtp);
 			mailConfig.put("port", mail_port);
 			mailConfig.put("user", mail_user);
 			mailConfig.put("password", mail_password);
 			mailConfig.put("name", mail_name);
+			// AWS SES configuration
+			if (mail_aws_ses_region != null && !mail_aws_ses_region.isEmpty()) {
+				mailConfig.put("aws-ses-region", mail_aws_ses_region);
+			}
+			if (mail_aws_ses_from != null && !mail_aws_ses_from.isEmpty()) {
+				mailConfig.put("aws-ses-from", mail_aws_ses_from);
+			}
+			if (mail_aws_ses_configuration_set != null && !mail_aws_ses_configuration_set.isEmpty()) {
+				mailConfig.put("aws-ses-configuration-set", mail_aws_ses_configuration_set);
+			}
 			application.getSettings().setMail(mailConfig);
 		} else {
 			application.getSettings().setMail(null);

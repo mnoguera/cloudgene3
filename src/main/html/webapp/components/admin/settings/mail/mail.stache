@@ -1,6 +1,6 @@
 <h2>Mail</h2>
 
-<p>Customize the SMTP mailing system used by Cloudgene to handle outgoing e-mails.</p>
+<p>Configure the email system used by Cloudgene to send outgoing emails.</p>
 
 <hr>
 
@@ -13,28 +13,63 @@
 		</div>
 
 	<div class="form-group">
-		<label for="mail-smtp" {{^settings.mail}}disabled{{/settings.mail}}>Server:</label>
-		<input id="mail-smtp" name="mail-smtp" type="text" class="form-control col-md-4" value="{{settings.mailSmtp}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off">
+		<label for="mail-provider" {{^settings.mail}}disabled{{/settings.mail}}>Email Provider:</label>
+		<select id="mail-provider" name="mail-provider" class="form-control col-md-4" {{^settings.mail}}disabled{{/settings.mail}}>
+			<option value="smtp" {{#if_eq settings.mailProvider 'smtp'}}selected{{/if_eq}}>SMTP</option>
+			<option value="aws-ses" {{#if_eq settings.mailProvider 'aws-ses'}}selected{{/if_eq}}>AWS SES</option>
+		</select>
+		<small class="form-text text-muted">Choose between traditional SMTP or AWS Simple Email Service.</small>
 	</div>
 
-	<div class="form-group">
-		<label for="mail-port" {{^settings.mail}}disabled{{/settings.mail}}>Port:</label>
-		<input id="mail-port" name="mail-port" type="text" class="form-control col-md-4" value="{{settings.mailPort}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off">
+	<div id="smtp-config" style="display: none;">
+		<h4>SMTP Configuration</h4>
+		<div class="form-group">
+			<label for="mail-smtp" {{^settings.mail}}disabled{{/settings.mail}}>Server:</label>
+			<input id="mail-smtp" name="mail-smtp" type="text" class="form-control col-md-4" value="{{settings.mailSmtp}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off">
+		</div>
+
+		<div class="form-group">
+			<label for="mail-port" {{^settings.mail}}disabled{{/settings.mail}}>Port:</label>
+			<input id="mail-port" name="mail-port" type="text" class="form-control col-md-4" value="{{settings.mailPort}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off">
+		</div>
+
+		<div class="form-group">
+			<label for="mail-user" {{^settings.mail}}disabled{{/settings.mail}}>User:</label>
+			<input id="mail-user" name="mail-user" type="text" class="form-control col-md-4" value="{{settings.mailUser}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off">
+		</div>
+
+		<div class="form-group">
+			<label for="mail-password" {{^settings.mail}}disabled{{/settings.mail}}>Password:</label>
+			<input id="mail-password" name="mail-password" type="password" class="form-control col-md-4" value="{{settings.mailPassword}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off">
+		</div>
+
+		<div class="form-group">
+			<label for="mail-name" {{^settings.mail}}disabled{{/settings.mail}}>Sender:</label>
+			<input id="mail-name" name="mail-name" type="text" class="form-control col-md-4" value="{{settings.mailName}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off">
+		</div>
 	</div>
 
-	<div class="form-group">
-		<label for="mail-user" {{^settings.mail}}disabled{{/settings.mail}}>User:</label>
-		<input id="mail-user" name="mail-user" type="text" class="form-control col-md-4" value="{{settings.mailUser}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off">
-	</div>
+	<div id="aws-ses-config" style="display: none;">
+		<h4>AWS SES Configuration</h4>
+		<small class="form-text text-muted">AWS credentials are obtained from environment variables, IAM role, or AWS credentials file.</small>
+		
+		<div class="form-group">
+			<label for="mail-aws-ses-region" {{^settings.mail}}disabled{{/settings.mail}}>AWS Region:</label>
+			<input id="mail-aws-ses-region" name="mail-aws-ses-region" type="text" class="form-control col-md-4" value="{{settings.mailAwsSesRegion}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off" placeholder="us-east-1">
+			<small class="form-text text-muted">Example: us-east-1, eu-west-1, ap-southeast-1</small>
+		</div>
 
-	<div class="form-group">
-		<label for="mail-password" {{^settings.mail}}disabled{{/settings.mail}}>Password:</label>
-		<input id="mail-password" name="mail-password" type="password" class="form-control col-md-4" value="{{settings.mailPassword}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off">
-	</div>
+		<div class="form-group">
+			<label for="mail-aws-ses-from" {{^settings.mail}}disabled{{/settings.mail}}>From Address:</label>
+			<input id="mail-aws-ses-from" name="mail-aws-ses-from" type="text" class="form-control col-md-4" value="{{settings.mailAwsSesFrom}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off" placeholder="noreply@example.com">
+			<small class="form-text text-muted">Must be a verified email address or domain in AWS SES.</small>
+		</div>
 
-	<div class="form-group">
-		<label for="mail-name" {{^settings.mail}}disabled{{/settings.mail}}>Sender:</label>
-		<input id="mail-name" name="mail-name" type="text" class="form-control col-md-4" value="{{settings.mailName}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off">
+		<div class="form-group">
+			<label for="mail-aws-ses-configuration-set" {{^settings.mail}}disabled{{/settings.mail}}>Configuration Set (Optional):</label>
+			<input id="mail-aws-ses-configuration-set" name="mail-aws-ses-configuration-set" type="text" class="form-control col-md-4" value="{{settings.mailAwsSesConfigurationSet}}" {{^settings.mail}}disabled{{/settings.mail}} autocomplete="off" placeholder="">
+			<small class="form-text text-muted">Optional SES configuration set for tracking email events.</small>
+		</div>
 	</div>
 
 	<hr>

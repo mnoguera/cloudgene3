@@ -30,10 +30,15 @@ database:
 
 ## Mail Server
 
-If no mail server is set, new registered users are activated immediately and no confirmation links are sent. This can be activated by defining a local or remote SMTP mail server:
+If no mail server is set, new registered users are activated immediately and no confirmation links are sent. You can configure email delivery using either traditional SMTP or AWS SES.
+
+### SMTP Configuration
+
+Define a local or remote SMTP mail server:
 
 ```yaml
 mail:
+  provider: smtp  # optional, defaults to smtp
   smtp: localhost
   port: 25
   user: username
@@ -41,6 +46,21 @@ mail:
   # the email address that Cloudgene uses to send emails
   name: noreply@domain.com
 ```
+
+### AWS SES Configuration
+
+Alternatively, use Amazon Simple Email Service (AWS SES) for scalable, cloud-based email delivery:
+
+```yaml
+mail:
+  provider: aws-ses
+  aws-ses-region: us-east-1
+  aws-ses-from: noreply@yourdomain.com
+  # Optional: specify a configuration set for tracking
+  aws-ses-configuration-set: my-config-set
+```
+
+AWS credentials are read from environment variables, IAM roles, or AWS credentials file. See the [AWS SES Configuration Guide](configure-email-aws-ses.md) for detailed setup instructions.
 
 ## Web-Application
 
