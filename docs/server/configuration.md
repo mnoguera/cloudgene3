@@ -30,6 +30,10 @@ database:
 
 ## Mail Server
 
+Cloudgene supports two email providers: SMTP and AWS SES.
+
+### SMTP (Default)
+
 If no mail server is set, new registered users are activated immediately and no confirmation links are sent. This can be activated by defining a local or remote SMTP mail server:
 
 ```yaml
@@ -41,6 +45,20 @@ mail:
   # the email address that Cloudgene uses to send emails
   name: noreply@domain.com
 ```
+
+### AWS SES
+
+Cloudgene also supports Amazon Simple Email Service (AWS SES) as an alternative to SMTP. To use AWS SES:
+
+```yaml
+mailProvider: aws-ses
+awsSes:
+  region: us-east-1
+  from: noreply@example.com
+  configuration-set: cloudgene-emails  # optional
+```
+
+For detailed AWS SES setup instructions, IAM permissions, and best practices, see [AWS SES Email Configuration](configure-email-aws-ses.md).
 
 ## Web-Application
 
