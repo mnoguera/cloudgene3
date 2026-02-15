@@ -1,13 +1,14 @@
 # Multi-stage Dockerfile for Cloudgene 3
 # Stage 1: Build stage with Maven and Node.js
-FROM maven:3.9-eclipse-temurin-17 AS builder
+FROM maven:3.9-eclipse-temurin-21 AS builder
 
 # Set working directory
 WORKDIR /build
 
-# Install Node.js (LTS, 18.x) for building the webapp
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs
+# Install Node.js for building the webapp
+RUN curl -fsSL https://deb.nodesource.com/setup_10.x | bash - && \
+    apt-get install -y nodejs curl unzip && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy pom.xml first to leverage Docker layer caching
 COPY pom.xml .
@@ -25,7 +26,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime stage with minimal JRE
-FROM eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:21-jre-jammy
 
 # Set working directory
 WORKDIR /app

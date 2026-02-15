@@ -2,6 +2,7 @@ package cloudgene.mapred.server.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -136,7 +137,7 @@ public class ServerAdminController {
 
 	@Get("/cloudgene-apps")
 	public String list() throws IOException {
-		URL url = new URL(CLOUDGENE_APPS_ENDPOINT);
+		URL url = URI.create(CLOUDGENE_APPS_ENDPOINT).toURL();
 		String content = FileUtil.readFileAsString(url.openStream());
 		return content;
 	}

@@ -3,6 +3,7 @@ package cloudgene.mapred.apps;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -123,7 +124,7 @@ public class ApplicationRepository {
 		}
 
 		// find latest
-		Application latest = versions.get(0);
+		Application latest = versions.getFirst();
 		for (int i = 1; i < versions.size(); i++) {
 			String latestVersion = latest.getWdlApp().getVersion();
 			String version = versions.get(i).getWdlApp().getVersion();
@@ -251,7 +252,7 @@ public class ApplicationRepository {
 
 		// download file from url
 		File zipFile = new File(FileUtil.path(appsFolder, "archive.zip"));
-        FileUtils.copyURLToFile(new URL(url), zipFile);
+        FileUtils.copyURLToFile(URI.create(url).toURL(), zipFile);
         Application application = installFromZipFile(zipFile.getAbsolutePath());
         zipFile.delete();
 		List<Application> applications = new Vector<Application>();
@@ -268,7 +269,7 @@ public class ApplicationRepository {
 			url = url.replace(matcher.group(0), "");
 		}
 		String filename = File.createTempFile("repo", ".json").getAbsolutePath();
-		FileUtils.copyURLToFile(new URL(url), new File(filename));
+		FileUtils.copyURLToFile(URI.create(url).toURL(), new File(filename));
 		return installFromRepository(filename, version);
 	}
 
@@ -391,7 +392,7 @@ public class ApplicationRepository {
 
 		String url = GitHubUtil.buildUrlFromRepository(repository);
 		File zipFile = new File(FileUtil.path(appsFolder, "archive.zip"));
-		FileUtils.copyURLToFile(new URL(url), zipFile);
+		FileUtils.copyURLToFile(URI.create(url).toURL(), zipFile);
 
 		String zipFilename = zipFile.getAbsolutePath();
 		Application application = installFromZipFile(zipFilename, repository.getYaml());

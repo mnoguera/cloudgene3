@@ -64,7 +64,7 @@ public class JobAdminController {
 		AbstractJob job = jobService.getById(id);
 		int count = jobService.reset(job, maxDownloads);
 
-		log.info(String.format("Job: Resetting download counters for job %s (by ADMIN user ID %s - email %s)",
+		log.info("Job: Resetting download counters for job %s (by ADMIN user ID %s - email %s)".formatted(
 				job.getId(), admin.getId(), admin.getMail()));
 
 		return MessageResponse.success(id + ": counter of " + count + " downloads reset to " + maxDownloads);
@@ -80,7 +80,7 @@ public class JobAdminController {
 		AbstractJob job = jobService.getById(id);
 		String message = cleanUpService.sendNotification(job, days);
 
-		log.info(String.format("Job: Set retire date for job %s (by ADMIN user ID %s - email %s)", job.getId(),
+		log.info("Job: Set retire date for job %s (by ADMIN user ID %s - email %s)".formatted(job.getId(),
 				admin.getId(), admin.getMail()));
 
 		return MessageResponse.success(message);
@@ -95,7 +95,7 @@ public class JobAdminController {
 		AbstractJob job = jobService.getById(id);
 		jobService.changePriority(job, HIGH_PRIORITY);
 
-		log.info(String.format("Job: Update priority for job %s (by ADMIN user ID %s - email %s)", job.getId(),
+		log.info("Job: Update priority for job %s (by ADMIN user ID %s - email %s)".formatted(job.getId(),
 				admin.getId(), admin.getMail()));
 
 		return MessageResponse.success("Update priority for job " + job.getId() + ".");
@@ -110,7 +110,7 @@ public class JobAdminController {
 		AbstractJob job = jobService.getById(id);
 		String message = jobService.archive(job);
 
-		log.info(String.format("Job: Immediately retired job %s (by ADMIN user ID %s - email %s)", job.getId(),
+		log.info("Job: Immediately retired job %s (by ADMIN user ID %s - email %s)".formatted(job.getId(),
 				admin.getId(), admin.getMail()));
 
 		return MessageResponse.success(message);
@@ -126,7 +126,7 @@ public class JobAdminController {
 		AbstractJob job = jobService.getById(id);
 		String message = jobService.increaseRetireDate(job, days);
 
-		log.info(String.format("Job: Extended retire date for job %s (by ADMIN user ID %s - email %s)", job.getId(),
+		log.info("Job: Extended retire date for job %s (by ADMIN user ID %s - email %s)".formatted(job.getId(),
 				admin.getId(), admin.getMail()));
 
 		return message;
@@ -142,7 +142,7 @@ public class JobAdminController {
 		int notifications = cleanUpService.sendNotifications();
 		int retired = cleanUpService.executeRetire();
 
-		log.info(String.format("Job: Manually triggered retiring of all eligible jobs (by ADMIN user ID %s - email %s)",
+		log.info("Job: Manually triggered retiring of all eligible jobs (by ADMIN user ID %s - email %s)".formatted(
 				admin.getId(), admin.getMail()));
 
 		return "NotificationJob:\n" + notifications + " notifications sent." + "\n\nRetireJob:\n" + retired
@@ -159,7 +159,7 @@ public class JobAdminController {
 		List<JobResponse> responses = JobResponse.build(jobs, admin);
 		String workspace = application.getSettings().getLocalWorkspace();
 
-		log.info(String.format("Job: list all jobs of of all users (by ADMIN user ID %s - email %s)", admin.getId(),
+		log.info("Job: list all jobs of of all users (by ADMIN user ID %s - email %s)".formatted(admin.getId(),
 				admin.getMail()));
 		
 		return JobAdminResponse.build(responses, workspace);

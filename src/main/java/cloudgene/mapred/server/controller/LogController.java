@@ -60,9 +60,9 @@ public class LogController {
 			buffer.append(outputContent);
 		}
 
-		String message = String.format("Job: viewing logs for job ID %s", job.getId());
+		String message = "Job: viewing logs for job ID %s".formatted(job.getId());
 		if (user.isAdmin()) {
-			message += String.format(" (by ADMIN user ID %s - email %s)", user.getId(), user.getMail());
+			message += " (by ADMIN user ID %s - email %s)".formatted(user.getId(), user.getMail());
 		}
 		log.info(message);
 

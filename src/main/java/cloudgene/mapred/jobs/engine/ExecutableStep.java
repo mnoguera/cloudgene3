@@ -62,12 +62,12 @@ public class ExecutableStep {
 		try {
 
 
-			Object object = myClass.newInstance();
+			Object object = myClass.getDeclaredConstructor().newInstance();
 
-			if (object instanceof CloudgeneStep) {
-				instance = (CloudgeneStep) object;
-			} else if (object instanceof WorkflowStep) {
-				instance = new JavaInternalStep((WorkflowStep) object);
+			if (object instanceof CloudgeneStep cloudgeneStep) {
+				instance = cloudgeneStep;
+			} else if (object instanceof WorkflowStep workflowStep) {
+				instance = new JavaInternalStep(workflowStep);
 			} else {
 				instance = new ErrorStep("Error during initialization: class " + step.getClassname() + " ( "
 						+ object.getClass().getSuperclass().getCanonicalName() + ") "

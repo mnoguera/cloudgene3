@@ -121,7 +121,7 @@ public class UserService {
 		UserDao dao = new UserDao(application.getDatabase());
 		User user = dao.findByUsername(username);
 		if (user == null) {
-			throw new JsonHttpStatusException(HttpStatus.NOT_FOUND, String.format(MESSAGE_USER_NOT_FOUND, username));
+			throw new JsonHttpStatusException(HttpStatus.NOT_FOUND, MESSAGE_USER_NOT_FOUND.formatted(username));
 		}
 		return user;
 	}
@@ -150,7 +150,7 @@ public class UserService {
 		// check if user is admin or it is his username
 		if (!user.getUsername().equals(username) && !user.isAdmin()) {
 
-			log.error(String.format("User: ID %s ('%s') attempted to change profile of a different user '%s'",
+			log.error("User: ID %s ('%s') attempted to change profile of a different user '%s'".formatted(
 					user.getId(), user.getUsername(), username));
 
 			return MessageResponse.error(MESSAGE_NOT_ALLOWED);
@@ -176,7 +176,7 @@ public class UserService {
 		newUser.setMail(mail);
 
 		if (user.getMail() != null && !user.getMail().equals(newUser.getMail())) {
-			log.info(String.format("User: changed email address for user %s (ID %s)", newUser.getUsername(),
+			log.info("User: changed email address for user %s (ID %s)".formatted(newUser.getUsername(),
 					newUser.getId()));
 		}
 
@@ -184,12 +184,12 @@ public class UserService {
 		if (!application.getSettings().isEmailRequired()) {
 			if ((newUser.getMail() == null || newUser.getMail().isEmpty()) && user.hasRole(DEFAULT_ROLE)) {
 				newUser.replaceRole(DEFAULT_ROLE, DEFAULT_ANONYMOUS_ROLE);
-				log.info(String.format("User: changed role to %s for user %s (ID %s)", DEFAULT_ANONYMOUS_ROLE, newUser.getUsername(),
+				log.info("User: changed role to %s for user %s (ID %s)".formatted(DEFAULT_ANONYMOUS_ROLE, newUser.getUsername(),
 						newUser.getId()));
 				roleMessage += "<br><br>Your account has been <b>downgraded</b>.<br>To apply these changes, please log out and log back in.";
 			} else if ((newUser.getMail() != null && !newUser.getMail().isEmpty()) && user.hasRole(DEFAULT_ANONYMOUS_ROLE)) {
 				newUser.replaceRole(DEFAULT_ANONYMOUS_ROLE, DEFAULT_ROLE);
-				log.info(String.format("User: changed role to %s for user %s (ID %s)", DEFAULT_ROLE, newUser.getUsername(),
+				log.info("User: changed role to %s for user %s (ID %s)".formatted(DEFAULT_ROLE, newUser.getUsername(),
 						newUser.getId()));
 				roleMessage += "<br><br>Your account has been <b>upgraded</b>.<br>To apply these changes, please log out and log back in.";
 			}
@@ -205,7 +205,7 @@ public class UserService {
 			}
 			newUser.setPassword(HashUtil.hashPassword(new_password));
 
-			log.info(String.format("User: changed password for user %s (ID %s - email %s)", newUser.getUsername(),
+			log.info("User: changed password for user %s (ID %s - email %s)".formatted(newUser.getUsername(),
 					newUser.getId(), newUser.getMail()));
 
 		}
@@ -226,7 +226,7 @@ public class UserService {
 
 			UserDao dao = new UserDao(application.getDatabase());
 
-			log.info(String.format("User: requested deletion of account %s (ID %s - email %s)", user.getUsername(),
+			log.info("User: requested deletion of account %s (ID %s - email %s)".formatted(user.getUsername(),
 					user.getId(), user.getMail()));
 
 			boolean deleted = dao.delete(user);
@@ -273,7 +273,7 @@ public class UserService {
 		user.setActivationCode("");
 		dao.update(user);
 
-		log.info(String.format("User: changed password via account recovery mechanism for user %s (ID %s - email %s)",
+		log.info("User: changed password via account recovery mechanism for user %s (ID %s - email %s)".formatted(
 				user.getUsername(), user.getId(), user.getMail()));
 
 		return MessageResponse.success(MESSAGE_PASSWORD_UPDATED);
@@ -325,7 +325,7 @@ public class UserService {
 			try {
 				if (user.getMail()!= null && !user.getMail().isEmpty()) {
 
-					log.info(String.format("Password reset link requested for user '%s'", username));
+					log.info("Password reset link requested for user '%s'".formatted(username));
 
 					MailUtil.send(application.getSettings(), user.getMail(), subject, body);
 
@@ -424,7 +424,7 @@ public class UserService {
 
 			}
 
-			log.info(String.format("Registration: New user %s (ID %s - email %s - roles %s)", newUser.getUsername(),
+			log.info("Registration: New user %s (ID %s - email %s - roles %s)".formatted(newUser.getUsername(),
 					newUser.getId(), newUser.getMail(), Arrays.toString(newUser.getRoles())));
 
 			dao.insert(newUser);
@@ -450,15 +450,14 @@ public class UserService {
 				user.setActivationCode("");
 				dao.update(user);
 
-				log.info(String.format("User: activated user %s (ID %s - email %s)", user.getUsername(), user.getId(),
+				log.info("User: activated user %s (ID %s - email %s)".formatted(user.getUsername(), user.getId(),
 						user.getMail()));
 
 				return MessageResponse.success(MESSAGE_USER_ACTIVATED);
 
 			} else {
 
-				log.warn(String.format(
-						"User: code is either incorrect or has already been used for user %s (ID %s - email %s)",
+				log.warn("User: code is either incorrect or has already been used for user %s (ID %s - email %s)".formatted(
 						user.getUsername(), user.getId(), user.getMail()));
 
 				return MessageResponse.error(MESSAGE_WRONG_ACTIVATION_CODE);
@@ -467,7 +466,7 @@ public class UserService {
 
 		} else {
 
-			log.warn(String.format("User: used activation code for missing or unknown username '%s'", username));
+			log.warn("User: used activation code for missing or unknown username '%s'".formatted(username));
 
 			return MessageResponse.error(MESSAGE_WRONG_USERNAME);
 

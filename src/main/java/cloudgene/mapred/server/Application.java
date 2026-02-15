@@ -168,7 +168,7 @@ public class Application {
 		String template = cacheTemplates.get(key);
 
 		if (template != null) {
-			return String.format(template, strings);
+			return template.formatted(strings);
 		} else {
 			return "!" + key;
 		}

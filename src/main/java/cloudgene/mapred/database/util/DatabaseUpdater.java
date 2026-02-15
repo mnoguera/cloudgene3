@@ -369,10 +369,12 @@ public class DatabaseUpdater {
 	public void createVersionTable(Database database) {
 		try {
 			Connection connection = connector.getDataSource().getConnection();
-			String statement = "create table database_versions ( \r\n"
-					+ "	id          integer not null auto_increment primary key,\r\n"
-					+ "	version	varchar(255) not null,\r\n"
-					+ "    updated_on timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP \r\n" + ")";
+			String statement = """
+					create table database_versions ( 
+						id          integer not null auto_increment primary key,
+						version	varchar(255) not null,
+					    updated_on timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP 
+					)""";
 			PreparedStatement ps = connection.prepareStatement(statement);
 			ps.executeUpdate();
 			connection.close();

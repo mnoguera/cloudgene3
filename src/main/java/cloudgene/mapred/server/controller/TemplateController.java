@@ -62,7 +62,7 @@ public class TemplateController {
 		Template template = dao.findByKey(key);
 
 		if (template == null) {
-			throw new HttpStatusException(HttpStatus.NOT_FOUND, String.format(MESSAGE_TEMPLATE_NOT_FOUND, key));
+			throw new HttpStatusException(HttpStatus.NOT_FOUND, MESSAGE_TEMPLATE_NOT_FOUND.formatted(key));
 		}
 
 		return template;

@@ -88,11 +88,11 @@ public class PropertyResponse {
 		PropertyResponse response = new PropertyResponse();
 		response.setKey(key);
 		response.setLabel(value);
-		if (values instanceof Map) {
-			List<PropertyResponse> responseWithValues = buildWithValues((Map) values);
+		if (values instanceof Map map) {
+			List<PropertyResponse> responseWithValues = buildWithValues(map);
 			response.setValues(responseWithValues);
-		} else if (values instanceof List) {
-			List<PropertyResponse> responseWithValues = buildWithValues((List) values);
+		} else if (values instanceof List list) {
+			List<PropertyResponse> responseWithValues = buildWithValues(list);
 			response.setValues(responseWithValues);
 		}
 		return response;

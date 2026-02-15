@@ -104,7 +104,8 @@ public class WorkflowEngine implements Runnable {
 	}
 
 	public void stop() {
-		threadLongTimeQueue.stop();
+		// Use interrupt() instead of deprecated stop() method for Java 21+
+		threadLongTimeQueue.interrupt();
 	}
 
 	public void block() {
@@ -140,7 +141,7 @@ public class WorkflowEngine implements Runnable {
 					Integer value = counters.get(name);
 					Long oldvalue = result.get(name);
 					if (oldvalue == null) {
-						oldvalue = new Long(0);
+						oldvalue = Long.valueOf(0);
 					}
 					result.put(name, oldvalue + value);
 				}
@@ -156,9 +157,9 @@ public class WorkflowEngine implements Runnable {
 
 		for (AbstractJob job : jobs) {
 
-			if (job instanceof CloudgeneJob) {
+			if (job instanceof CloudgeneJob cloudgeneJob) {
 
-				((CloudgeneJob) job).updateProgress();
+				cloudgeneJob.updateProgress();
 
 			}
 
@@ -173,9 +174,9 @@ public class WorkflowEngine implements Runnable {
 
 		for (AbstractJob job : jobs) {
 
-			if (job instanceof CloudgeneJob) {
+			if (job instanceof CloudgeneJob cloudgeneJob) {
 
-				((CloudgeneJob) job).updateProgress();
+				cloudgeneJob.updateProgress();
 
 			}
 

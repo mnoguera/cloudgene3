@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -238,7 +239,7 @@ public class S3Workspace implements IWorkspace {
 
 			String filename = summary.getKey().replaceAll(urlParts.key() + "/", "");
 			String size = FileUtils.byteCountToDisplaySize(summary.getSize());
-			String hash = HashUtil.getSha256(filename + size + (Math.random() * 100000));
+			String hash = HashUtil.getSha256(filename + size + (ThreadLocalRandom.current().nextDouble() * 100000));
 			if (filename.equals("cloudgene.out")){
 				continue;
 			}

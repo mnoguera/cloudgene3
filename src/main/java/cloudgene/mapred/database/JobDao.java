@@ -439,18 +439,18 @@ public class JobDao extends JdbcDataAccessObject {
 				job.setInputParams(inputParams);
 				job.setOutputParams(outputParams);
 
-				if (job instanceof CloudgeneJob) {
+				if (job instanceof CloudgeneJob cloudgeneJob) {
 
 					StepDao stepDao = new StepDao(database);
-					List<Step> steps = stepDao.findAllByJob((CloudgeneJob) job);
+					List<Step> steps = stepDao.findAllByJob(cloudgeneJob);
 					job.setSteps(steps);
 
 				}
 
 			}
 
-			if (job instanceof CloudgeneJob) {
-				((CloudgeneJob) job).updateProgress();
+			if (job instanceof CloudgeneJob cloudgeneJob) {
+				cloudgeneJob.updateProgress();
 			}
 
 			if (job != null) {

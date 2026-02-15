@@ -2,6 +2,7 @@ package cloudgene.mapred.cli;
 
 import java.io.File;
 import java.io.FileReader;
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class CloneApplications extends BaseTool {
 		String tmpFilename = "repo.yaml";
 		if (repo.startsWith("http://") || repo.startsWith("https://")) {
 			try {
-				FileUtils.copyURLToFile(new URL(repo), new File(tmpFilename));
+				FileUtils.copyURLToFile(URI.create(repo).toURL(), new File(tmpFilename));
 				repo = tmpFilename;
 			} catch (Exception e) {
 				System.out.println("Error during download repository from " + repo);

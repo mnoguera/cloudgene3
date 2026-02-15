@@ -53,10 +53,10 @@ public class TestCommand {
 
 		assertEquals(AbstractJob.STATE_SUCCESS, job.getState());
 
-		List<Message> messages = job.getSteps().get(0).getLogMessages();
+		List<Message> messages = job.getSteps().getFirst().getLogMessages();
 		assertEquals(1, messages.size());
-		assertEquals(messages.get(0).getType(), WorkflowContext.OK);
-		assertTrue(messages.get(0).getMessage().contains("Execution successful."));
+		assertEquals(messages.getFirst().getType(), WorkflowContext.OK);
+		assertTrue(messages.getFirst().getMessage().contains("Execution successful."));
 
 		String stdout = FileUtil.path(application.getSettings().getLocalWorkspace(), job.getId(), "logs", "std.out");
 		String contentStdOut = FileUtil.readFileAsString(stdout);
@@ -90,10 +90,10 @@ public class TestCommand {
 
 		assertEquals(AbstractJob.STATE_FAILED, job.getState());
 
-		List<Message> messages = job.getSteps().get(0).getLogMessages();
+		List<Message> messages = job.getSteps().getFirst().getLogMessages();
 		assertEquals(1, messages.size());
-		assertEquals(messages.get(0).getType(), WorkflowContext.ERROR);
-		assertTrue(messages.get(0).getMessage().contains("Command '/bin/lukas/forer' was not found."));
+		assertEquals(messages.getFirst().getType(), WorkflowContext.ERROR);
+		assertTrue(messages.getFirst().getMessage().contains("Command '/bin/lukas/forer' was not found."));
 	}
 
 	/*

@@ -53,8 +53,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider<Ht
 
 				if (!user.isActive()) {
 
-					log.info(String.format(
-							"Authorization failure: User account is not activated for account %s (ID %s - email %s)",
+					log.info("Authorization failure: User account is not activated for account %s (ID %s - email %s)".formatted(
 							user.getUsername(), user.getId(), user.getMail()));
 
 					emitter.error(AuthenticationResponse.exception(MESSAGE_ACCOUNT_IS_INACTIVE));
@@ -64,18 +63,16 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider<Ht
 				if (user.getLoginAttempts() >= MAX_LOGIN_ATTEMPTS) {
 					if (user.getLockedUntil() == null || user.getLockedUntil().after(new Date())) {
 
-						log.info(String.format(
-								"Authorization failure: login retries are currently locked for account %s (ID %s - email %s)",
+						log.info("Authorization failure: login retries are currently locked for account %s (ID %s - email %s)".formatted(
 								user.getUsername(), user.getId(), user.getMail()));
 
 						emitter.error(AuthenticationResponse
-								.exception(String.format(MESSAGE_ACCOUNT_LOCKED, LOCKING_TIME_MIN)));
+								.exception(MESSAGE_ACCOUNT_LOCKED.formatted(LOCKING_TIME_MIN)));
 						return;
 
 					} else {
 						// penalty time is over. set to zero
-						log.info(String.format(
-								"Authorization: Account login lock has expired; releasing for account %s (ID %s - email %s)",
+						log.info("Authorization: Account login lock has expired; releasing for account %s (ID %s - email %s)".formatted(
 								user.getUsername(), user.getId(), user.getMail()));
 						user.setLoginAttempts(0);
 					}
@@ -87,7 +84,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider<Ht
 					user.setLastLogin(new Date());
 					dao.update(user);
 
-					String message = String.format("Authorization success: user login %s (ID %s - email %s)",
+					String message = "Authorization success: user login %s (ID %s - email %s)".formatted(
 							user.getUsername(), user.getId(), user.getMail());
 					if (user.isAdmin()) {
 						// Note: Admin user logins are called out explicitly, to aid log analysis in the
@@ -108,21 +105,20 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider<Ht
 					// too many, lock user
 					if (attempts >= MAX_LOGIN_ATTEMPTS) {
 
-						log.warn(String.format(
-								"Authorization failure: User account %s (ID %s - email %s) locked due to too many failed logins",
+						log.warn("Authorization failure: User account %s (ID %s - email %s) locked due to too many failed logins".formatted(
 								user.getUsername(), user.getId(), user.getMail()));
 
 						user.setLockedUntil(new Date(System.currentTimeMillis() + (LOCKING_TIME_MIN * 60 * 1000)));
 					}
 					dao.update(user);
 
-					log.warn(String.format("Authorization failure: Invalid password for username: %s", loginUsername));
+					log.warn("Authorization failure: Invalid password for username: %s".formatted(loginUsername));
 
 					emitter.error(AuthenticationResponse.exception(MESSAGE_LOGIN_FAILED));
 					return;
 				}
 			} else {
-				log.warn(String.format("Authorization failure: unknown username: %s", loginUsername));
+				log.warn("Authorization failure: unknown username: %s".formatted(loginUsername));
 				emitter.error(AuthenticationResponse.exception(MESSAGE_LOGIN_FAILED));
 				return;
 			}

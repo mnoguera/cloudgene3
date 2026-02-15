@@ -67,7 +67,7 @@ public class ApiTokenController {
 		boolean successful = userDao.update(user);
 
 		if (successful) {
-			log.info(String.format("User: generated API token for user %s (ID %s - email %s)", user.getUsername(), user.getId(), user.getMail()));
+			log.info("User: generated API token for user %s (ID %s - email %s)".formatted(user.getUsername(), user.getId(), user.getMail()));
 			return HttpResponse.ok(new ApiTokenResponse(apiToken));
 
 		} else {
@@ -93,7 +93,7 @@ public class ApiTokenController {
 
 		if (successful) {
 
-			log.info(String.format("User: revoked API token for user %s (ID %s - email %s)", user.getUsername(), user.getId(), user.getMail()));
+			log.info("User: revoked API token for user %s (ID %s - email %s)".formatted(user.getUsername(), user.getId(), user.getMail()));
 			
 			return HttpResponse.ok(MessageResponse.success(MESSAGE_API_TOKEN_CREATED));
 

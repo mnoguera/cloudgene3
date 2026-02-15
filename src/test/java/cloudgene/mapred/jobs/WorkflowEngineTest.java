@@ -206,12 +206,12 @@ public class WorkflowEngineTest {
 		assertEquals(AbstractJob.STATE_SUCCESS, job.getState());
 
 		// check step ouputs
-		assertEquals("text1: my-value\n", job.getSteps().get(0).getLogMessages().get(0).getMessage());
-		assertEquals("checkbox1: true\n", job.getSteps().get(1).getLogMessages().get(0).getMessage());
-		assertEquals("list1: value1\n", job.getSteps().get(2).getLogMessages().get(0).getMessage());
-		assertEquals("text2: my-value\n", job.getSteps().get(3).getLogMessages().get(0).getMessage());
-		assertEquals("checkbox2: true\n", job.getSteps().get(4).getLogMessages().get(0).getMessage());
-		assertEquals("list2: value1\n", job.getSteps().get(5).getLogMessages().get(0).getMessage());
+		assertEquals("text1: my-value\n", job.getSteps().getFirst().getLogMessages().getFirst().getMessage());
+		assertEquals("checkbox1: true\n", job.getSteps().get(1).getLogMessages().getFirst().getMessage());
+		assertEquals("list1: value1\n", job.getSteps().get(2).getLogMessages().getFirst().getMessage());
+		assertEquals("text2: my-value\n", job.getSteps().get(3).getLogMessages().getFirst().getMessage());
+		assertEquals("checkbox2: true\n", job.getSteps().get(4).getLogMessages().getFirst().getMessage());
+		assertEquals("list2: value1\n", job.getSteps().get(5).getLogMessages().getFirst().getMessage());
 
 	}
 
@@ -235,7 +235,7 @@ public class WorkflowEngineTest {
 		assertEquals(AbstractJob.STATE_SUCCESS, job.getState());
 
 		Settings settings = application.getSettings();
-		String path = job.getOutputParams().get(0).getFiles().get(0).getPath();
+		String path = job.getOutputParams().getFirst().getFiles().getFirst().getPath();
 		String filename = FileUtil.path(settings.getLocalWorkspace(), path);
 		String content = FileUtil.readFileAsString(filename);
 		assertEquals(myContent, content);
@@ -252,9 +252,9 @@ public class WorkflowEngineTest {
 		}
 		assertEquals(AbstractJob.STATE_FAILED, job.getState());
 
-		System.out.println("ok:" + job.getOutputParams().get(0).getValue());
+		System.out.println("ok:" + job.getOutputParams().getFirst().getValue());
 
-		path = job.getOutputParams().get(0).getFiles().get(0).getPath();
+		path = job.getOutputParams().getFirst().getFiles().getFirst().getPath();
 		filename = FileUtil.path(settings.getLocalWorkspace(), path);
 		content = FileUtil.readFileAsString(filename);
 		assertEquals(myContent, content);
@@ -324,7 +324,7 @@ public class WorkflowEngineTest {
 		}
 
 		Settings settings = application.getSettings();
-		String path = job.getOutputParams().get(0).getFiles().get(0).getPath();
+		String path = job.getOutputParams().getFirst().getFiles().getFirst().getPath();
 		String filename = FileUtil.path(settings.getLocalWorkspace(), path);
 		String content = FileUtil.readFileAsString(filename);
 
@@ -352,7 +352,7 @@ public class WorkflowEngineTest {
 		}
 		Thread.sleep(4000);
 		Settings settings = application.getSettings();
-		String path = job.getOutputParams().get(0).getFiles().get(0).getPath();
+		String path = job.getOutputParams().getFirst().getFiles().getFirst().getPath();
 		String filename = FileUtil.path(settings.getLocalWorkspace(), path);
 		String content = FileUtil.readFileAsString(filename);
 		assertTrue(job.getSubmittedOn() > 0);
@@ -381,7 +381,7 @@ public class WorkflowEngineTest {
 		Thread.sleep(4000);
 
 		Settings settings = application.getSettings();
-		String path = job.getOutputParams().get(0).getFiles().get(0).getPath();
+		String path = job.getOutputParams().getFirst().getFiles().getFirst().getPath();
 		String filename = FileUtil.path(settings.getLocalWorkspace(), path);
 		String content = FileUtil.readFileAsString(filename);
 		assertTrue(job.getSubmittedOn() > 0);
@@ -410,7 +410,7 @@ public class WorkflowEngineTest {
 		Thread.sleep(4000);
 
 		Settings settings = application.getSettings();
-		String path = job.getOutputParams().get(0).getFiles().get(0).getPath();
+		String path = job.getOutputParams().getFirst().getFiles().getFirst().getPath();
 		String filename = FileUtil.path(settings.getLocalWorkspace(), path);
 		String content = FileUtil.readFileAsString(filename);
 		// no steps executed
@@ -439,11 +439,11 @@ public class WorkflowEngineTest {
 
 		assertEquals(AbstractJob.STATE_SUCCESS, job.getState());
 
-		List<Message> messages = job.getSteps().get(0).getLogMessages();
+		List<Message> messages = job.getSteps().getFirst().getLogMessages();
 
 		assertEquals(3, messages.size());
-		assertEquals("cloudgene-task1", messages.get(0).getMessage());
-		assertEquals(WorkflowContext.OK, messages.get(0).getType());
+		assertEquals("cloudgene-task1", messages.getFirst().getMessage());
+		assertEquals(WorkflowContext.OK, messages.getFirst().getType());
 		assertEquals("cloudgene-task2", messages.get(1).getMessage());
 		assertEquals(WorkflowContext.OK, messages.get(1).getType());
 		assertEquals("cloudgene-task3", messages.get(2).getMessage());
@@ -509,7 +509,7 @@ public class WorkflowEngineTest {
 		assertTrue(job.getEndTime() > 0);
 		assertEquals(AbstractJob.STATE_SUCCESS, job.getState());
 
-		Message message = job.getSteps().get(0).getLogMessages().get(0);
+		Message message = job.getSteps().getFirst().getLogMessages().getFirst();
 		assertEquals(Message.OK, message.getType());
 		assertTrue(message.getMessage().contains("property1:hey!"));
 		assertTrue(message.getMessage().contains("property2:hey2!"));
@@ -537,7 +537,7 @@ public class WorkflowEngineTest {
 		assertTrue(job.getEndTime() > 0);
 		assertEquals(AbstractJob.STATE_SUCCESS, job.getState());
 
-		Message message = job.getSteps().get(0).getLogMessages().get(0);
+		Message message = job.getSteps().getFirst().getLogMessages().getFirst();
 		assertEquals(Message.OK, message.getType());
 		assertTrue(message.getMessage().contains("property1:hey!"));
 		assertTrue(message.getMessage().contains("property2:hey2!"));
@@ -564,7 +564,7 @@ public class WorkflowEngineTest {
 		assertTrue(job.getEndTime() > 0);
 		assertEquals(AbstractJob.STATE_SUCCESS, job.getState());
 
-		Message message = job.getSteps().get(0).getLogMessages().get(0);
+		Message message = job.getSteps().getFirst().getLogMessages().getFirst();
 		assertEquals(Message.OK, message.getType());
 		assertFalse(message.getMessage().contains("property1:hey!"));
 		assertFalse(message.getMessage().contains("property2:hey2!"));

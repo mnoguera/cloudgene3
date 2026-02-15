@@ -32,16 +32,25 @@ public class Template {
 					"<p>powered by <a href=\"http://cloudgene.uibk.ac.at\">Cloudgene</a></p>"),
 
 			new Template(REGISTER_MAIL,
-					"Dear %s,\nThis email has been sent automatically by the \"%s\" system to confirm that your profile has now been registered.\n\n"
-							+ "To confirm your email address, please click on this activation link %s"),
+					"""
+					Dear %s,
+					This email has been sent automatically by the "%s" system to confirm that your profile has now been registered.
+					
+					To confirm your email address, please click on this activation link %s"""),
 
 			new Template(RETIRE_JOB_MAIL,
-					"Dear %s,\nYour job retires in %s days! All imputation results will be deleted at that time.\n\n"
-							+ "Please ensure that you have downloaded all results from https://imputationserver.sph.umich.edu/start.html#!jobs/%s"),
+					"""
+					Dear %s,
+					Your job retires in %s days! All imputation results will be deleted at that time.
+					
+					Please ensure that you have downloaded all results from https://imputationserver.sph.umich.edu/start.html#!jobs/%s"""),
 
 			new Template(RECOVERY_MAIL,
-					"Dear %s,\nThis email has been sent automatically by the \"%s\" system.\n\n"
-							+ "To reset your password, please click on this link %s. "),
+					"""
+					Dear %s,
+					This email has been sent automatically by the "%s" system.
+					
+					To reset your password, please click on this link %s. """),
 
 			new Template(FOOTER_SUBMIT_JOB, ""),
 			
