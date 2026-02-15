@@ -1,0 +1,64 @@
+# Cloudgene Settings Example
+# This file shows example configurations for Cloudgene
+
+# Service name and base URL
+name: Cloudgene
+serverUrl: http://localhost:8082
+baseUrl: ""
+port: "8082"
+
+# Security - IMPORTANT: Change this in production!
+secretKey: "change-me-to-a-random-string"
+
+# Database configuration
+database:
+  driver: h2
+  database: data/cloudgene
+  user: cloudgene
+  password: cloudgene
+
+# Example 1: SMTP Email Configuration (Default)
+# Uncomment to use SMTP for sending emails
+mail:
+  smtp: smtp.example.com
+  port: "587"
+  user: username
+  password: password
+  name: noreply@example.com
+
+# Example 2: AWS SES Email Configuration
+# Uncomment to use AWS SES for sending emails
+# mailProvider: aws-ses
+# awsSes:
+#   region: us-east-1
+#   from: noreply@example.com
+#   configuration-set: cloudgene-emails  # optional
+
+# Workspace directories
+tempPath: tmp
+localWorkspace: workspace
+
+# Queue settings
+threadsQueue: 5
+maxRunningJobsPerUser: 2
+
+# Auto-retire settings
+autoRetire: false
+retireAfter: 6
+notificationAfter: 4
+autoRetireInterval: 5
+
+# Admin settings
+adminMail: admin@example.com
+adminName: Administrator
+emailRequired: true
+
+# File upload settings
+uploadLimit: 5000  # MB
+maxDownloads: 10
+
+# Other settings
+maintenance: false
+writeStatistics: true
+showLogs: false
+workspaceCleanup: true
