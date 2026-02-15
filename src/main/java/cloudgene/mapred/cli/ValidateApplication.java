@@ -3,7 +3,7 @@ package cloudgene.mapred.cli;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import com.esotericsoftware.yamlbeans.YamlException;
+import org.yaml.snakeyaml.error.YAMLException;
 
 import cloudgene.mapred.apps.Application;
 import cloudgene.mapred.wdl.WdlApp;
@@ -48,7 +48,7 @@ public class ValidateApplication extends BaseTool {
 			} catch (FileNotFoundException e1) {
 				printError("File '" + filename + "' not found.");
 				return 1;
-			} catch (YamlException e) {
+			} catch (YAMLException e) {
 				printError("Syntax error in file '" + filename + "':");
 				printError(e.getMessage());
 				return 1;

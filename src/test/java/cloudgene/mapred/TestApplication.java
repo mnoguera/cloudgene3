@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-import com.esotericsoftware.yamlbeans.YamlException;
+import org.yaml.snakeyaml.error.YAMLException;
 
 import cloudgene.mapred.apps.Application;
 import cloudgene.mapred.core.User;
@@ -23,7 +23,7 @@ public class TestApplication extends cloudgene.mapred.server.Application {
 	static {
 		try {
 			TestApplication.settings = loadSettings();
-		} catch (FileNotFoundException | YamlException e) {
+		} catch (FileNotFoundException | YAMLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -32,7 +32,7 @@ public class TestApplication extends cloudgene.mapred.server.Application {
 		super();
 	}
 
-	protected static Settings loadSettings() throws FileNotFoundException, YamlException {
+	protected static Settings loadSettings() throws FileNotFoundException, YAMLException {
 		
 		Settings settings = new Settings();
 

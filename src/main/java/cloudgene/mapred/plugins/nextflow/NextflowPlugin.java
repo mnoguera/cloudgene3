@@ -5,8 +5,7 @@ import cloudgene.mapred.plugins.IPlugin;
 import cloudgene.mapred.util.Configuration;
 import cloudgene.mapred.util.Settings;
 import cloudgene.mapred.wdl.WdlApp;
-import com.esotericsoftware.yamlbeans.YamlReader;
-import com.esotericsoftware.yamlbeans.YamlWriter;
+import org.yaml.snakeyaml.Yaml;
 import genepi.io.FileUtil;
 
 import java.io.File;
@@ -79,9 +78,8 @@ public class NextflowPlugin implements IPlugin {
 		properties.put("profile", config.get("nextflow.profile"));
 		properties.put("work", config.get("nextflow.work"));
 
-		YamlWriter writer = new YamlWriter(new FileWriter(nextflowProperties));
-		writer.write(properties);
-		writer.close();
+		Yaml yaml = new Yaml();
+		yaml.dump(properties, new FileWriter(nextflowProperties));
 
 		String nextflowEnv = FileUtil.path(appFolder, NEXTFLOW_ENV);
 		String contentEnv = config.get("nextflow.env");
@@ -108,9 +106,8 @@ public class NextflowPlugin implements IPlugin {
 			return config;
 		}
 
-		YamlReader reader = new YamlReader(new FileReader(nextflowProperties));
-		Map properties = reader.read(Map.class);
-		reader.close();
+		Yaml yaml = new Yaml();
+		Map properties = yaml.load(new FileReader(nextflowProperties));
 
 		if (properties.get("profile") != null) {
 			config.put("nextflow.profile", properties.get("profile").toString());

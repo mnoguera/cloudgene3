@@ -5,23 +5,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 
-import com.esotericsoftware.yamlbeans.YamlReader;
+import org.yaml.snakeyaml.LoaderOptions;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 public class WdlReader {
 
 	public static WdlApp loadAppFromString(String filename, String content) throws IOException {
 
-		YamlReader reader = new YamlReader(new StringReader(content));
-
-		reader.getConfig().setPropertyDefaultType(WdlApp.class, "workflow", WdlWorkflow.class);
-		reader.getConfig().setPropertyElementType(WdlWorkflow.class, "steps", WdlStep.class);
-		reader.getConfig().setPropertyElementType(WdlWorkflow.class, "setups", WdlStep.class);
-		reader.getConfig().setPropertyElementType(WdlWorkflow.class, "inputs", WdlParameterInput.class);
-		reader.getConfig().setPropertyElementType(WdlWorkflow.class, "outputs", WdlParameterOutput.class);
-		reader.getConfig().readConfig.setIgnoreUnknownProperties(true);
-
-		WdlApp app = reader.read(WdlApp.class);
-		reader.close();
+		LoaderOptions options = new LoaderOptions();
+		options.setAllowDuplicateKeys(false);
+		Constructor constructor = new Constructor(WdlApp.class, options);
+		Yaml yaml = new Yaml(constructor);
+		WdlApp app = yaml.loadAs(new StringReader(content), WdlApp.class);
 
 		updateApp(filename, app);
 
@@ -31,17 +27,11 @@ public class WdlReader {
 
 	public static WdlApp loadAppFromFile(String filename) throws IOException {
 
-		YamlReader reader = new YamlReader(new FileReader(filename));
-
-		reader.getConfig().setPropertyDefaultType(WdlApp.class, "workflow", WdlWorkflow.class);
-		reader.getConfig().setPropertyElementType(WdlWorkflow.class, "steps", WdlStep.class);
-		reader.getConfig().setPropertyElementType(WdlWorkflow.class, "setups", WdlStep.class);
-		reader.getConfig().setPropertyElementType(WdlWorkflow.class, "inputs", WdlParameterInput.class);
-		reader.getConfig().setPropertyElementType(WdlWorkflow.class, "outputs", WdlParameterOutput.class);
-		reader.getConfig().readConfig.setIgnoreUnknownProperties(true);
-
-		WdlApp app = reader.read(WdlApp.class);
-		reader.close();
+		LoaderOptions options = new LoaderOptions();
+		options.setAllowDuplicateKeys(false);
+		Constructor constructor = new Constructor(WdlApp.class, options);
+		Yaml yaml = new Yaml(constructor);
+		WdlApp app = yaml.loadAs(new FileReader(filename), WdlApp.class);
 
 		updateApp(filename, app);
 

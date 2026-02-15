@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
-import com.esotericsoftware.yamlbeans.YamlReader;
+import org.yaml.snakeyaml.Yaml;
 
 import cloudgene.mapred.apps.Application;
 import cloudgene.mapred.util.S3Util;
@@ -60,12 +60,10 @@ public class CloneApplications extends BaseTool {
 		}
 
 		try {
-			YamlReader reader = new YamlReader(new FileReader(repo));
-			while (true) {
-				Map entry = reader.read(Map.class);
-				if (entry == null) {
-					break;
-				}
+			Yaml yaml = new Yaml();
+			Iterable<Object> objects = yaml.loadAll(new FileReader(repo));
+			for (Object obj : objects) {
+				Map entry = (Map) obj;
 				String url = entry.get("url").toString();
 
 				System.out.println("Installing application " + url + "...");
@@ -91,7 +89,6 @@ public class CloneApplications extends BaseTool {
 				}
 
 			}
-			reader.close();
 		} catch (Exception e) {
 			printlnInRed("[ERROR] Error reading file '" + repo + "':" + e.toString() + "\n");
 		}
