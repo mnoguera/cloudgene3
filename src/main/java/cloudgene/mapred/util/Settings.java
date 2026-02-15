@@ -131,10 +131,7 @@ public class Settings {
 
 		LoaderOptions options = new LoaderOptions();
 		options.setAllowDuplicateKeys(false);
-		Constructor constructor = new Constructor(Settings.class, options);
-		// Allow specific classes for deserialization
-		constructor.getPropertyUtils().setAllowReadOnlyProperties(true);
-		Yaml yaml = new Yaml(constructor);
+		Yaml yaml = new Yaml(options);
 		Settings settings = yaml.loadAs(new FileReader(filename), Settings.class);
 		log.info("Settings loaded.");
 
